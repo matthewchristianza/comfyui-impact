@@ -1,6 +1,6 @@
 FROM timpietruskyblibla/runpod-worker-comfy:3.6.0-sdxl
 
-# Install system dependencies for OpenCV (including libgthread)
+# Install system dependencies for OpenCV
 USER root
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -21,10 +21,11 @@ RUN pip install --no-cache-dir \
     scikit-image \
     piexif
 
-# Clone Impact Pack
-RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack /comfyui/custom_nodes/ComfyUI-Impact-Pack && \
-    cd /comfyui/custom_nodes/ComfyUI-Impact-Pack && \
-    git submodule update --init --recursive
+# Clone Impact Pack with all submodules
+RUN git clone --recursive https://github.com/ltdrdata/ComfyUI-Impact-Pack /comfyui/custom_nodes/ComfyUI-Impact-Pack
+
+# Also clone Impact Subpack separately (contains UltralyticsDetectorProvider)
+RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Subpack /comfyui/custom_nodes/ComfyUI-Impact-Subpack
 
 # Download YOLO model
 RUN mkdir -p /comfyui/models/ultralytics/bbox && \
