@@ -19,7 +19,8 @@ RUN pip install --no-cache-dir \
     "opencv-python==4.8.1.78" \
     scipy \
     scikit-image \
-    piexif
+    piexif \
+    dill
 
 # Clone Impact Pack with all submodules
 RUN git clone --recursive https://github.com/ltdrdata/ComfyUI-Impact-Pack /comfyui/custom_nodes/ComfyUI-Impact-Pack
