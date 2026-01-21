@@ -42,4 +42,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: 59160648top/comfyui-impact:v8
+          tags: 59160648top/comfyui-impact:v9
