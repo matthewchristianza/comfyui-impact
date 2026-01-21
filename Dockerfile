@@ -1,6 +1,12 @@
 FROM timpietruskyblibla/runpod-worker-comfy:3.6.0-sdxl
 
-# Install Impact Pack dependencies first
+# Install system dependencies for OpenCV
+RUN apt-get update && apt-get install -y \
+    libglib2.0-0 \
+    libgl1-mesa-glx \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Impact Pack dependencies
 RUN pip install --no-cache-dir ultralytics segment-anything opencv-python-headless scipy scikit-image piexif
 
 # Clone Impact Pack and its submodules
