@@ -22,11 +22,16 @@ RUN pip install --no-cache-dir \
     piexif \
     dill
 
-# Clone Impact Pack with all submodules
-RUN git clone --recursive https://github.com/ltdrdata/ComfyUI-Impact-Pack /comfyui/custom_nodes/ComfyUI-Impact-Pack
+# Clone Impact Pack with all submodules - pinned to v7.2 for ComfyUI compatibility
+RUN git clone --recursive https://github.com/ltdrdata/ComfyUI-Impact-Pack /comfyui/custom_nodes/ComfyUI-Impact-Pack && \
+    cd /comfyui/custom_nodes/ComfyUI-Impact-Pack && \
+    git checkout tags/7.2 && \
+    git submodule update --init --recursive
 
-# Also clone Impact Subpack separately (contains UltralyticsDetectorProvider)
-RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Subpack /comfyui/custom_nodes/ComfyUI-Impact-Subpack
+# Also clone Impact Subpack separately (contains UltralyticsDetectorProvider) - pinned version
+RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Subpack /comfyui/custom_nodes/ComfyUI-Impact-Subpack && \
+    cd /comfyui/custom_nodes/ComfyUI-Impact-Subpack && \
+    git checkout tags/7.2
 
 # Download YOLO model
 RUN mkdir -p /comfyui/models/ultralytics/bbox && \
