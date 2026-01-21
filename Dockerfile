@@ -1,13 +1,23 @@
 FROM timpietruskyblibla/runpod-worker-comfy:3.6.0-sdxl
 
 # Install system dependencies for OpenCV
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     libglib2.0-0 \
+    libglib2.0-dev \
     libgl1-mesa-glx \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Impact Pack dependencies
-RUN pip install --no-cache-dir ultralytics segment-anything opencv-python-headless scipy scikit-image piexif
+# Install Impact Pack dependencies (use older opencv version for compatibility)
+RUN pip install --no-cache-dir \
+    ultralytics \
+    segment-anything \
+    "opencv-python-headless<4.10" \
+    scipy \
+    scikit-image \
+    piexif
 
 # Clone Impact Pack and its submodules
 RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack /comfyui/custom_nodes/ComfyUI-Impact-Pack && \
